@@ -2,7 +2,7 @@
 
 namespace CheckoutLib
 {
-    public class Item
+    public class Item : IItem
     {
         public string SKU { get; private set; }
         public decimal UnitPrice { get; private set; }
