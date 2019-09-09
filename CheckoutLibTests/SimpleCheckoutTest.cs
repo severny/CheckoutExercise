@@ -47,5 +47,28 @@ namespace Tests
             Assert.That(1, Is.EqualTo(checkout.ScannedItemsCount()), "Number of scanned items should remain one");
         }
 
+        [Test]
+        public void Given_An_Item__When_Sanned__Then_Correct_Amount_Is_Returned()
+        {
+            var checkout = new Checkout();
+            var item = new Item("Tst", 1.2m);
+            checkout.Scan(item);
+            Assert.That(1.2m, Is.EqualTo(checkout.Total()), "Total price for one item should be 1.2");
+            
+        }
+
+
+        [Test]
+        public void Given_A_Collection_Of_Items__When_Scanned__Then_Correct_Amount_Is_Returned()
+        {
+            var checkout = new Checkout();
+
+            for (int i = 0; i < 10; i++)
+            {
+                var item = new Item(@"Tst_{i}", 0.1m * i);
+                checkout.Scan(item);
+            }
+            Assert.That(4.5m, Is.EqualTo(checkout.Total()), "Total price for one item should be 1.2");
+        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace CheckoutLib
@@ -11,7 +12,7 @@ namespace CheckoutLib
 
         public decimal Total()
         {
-            return decimal.Zero;
+            return _scanedItems.Sum(i => i.Price);
         }
 
         public bool Scan(IItem item)
