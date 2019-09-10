@@ -121,5 +121,30 @@ namespace Tests
             Assert.That(0.95m, Is.EqualTo(checkout.Total()), "Total price for one item should be 0.95");
         }
 
+        [Test]
+        public void Given_A_Collection_Of_Special_Offers__When_Scanned_And_Meet_Offer_Twice__Then_Price_Should_Adhere_Special_Offer()
+        {
+            var priceProcessor = new QuantitySpecialOfferPriceProcessor();
+            priceProcessor.AddSpecialOffer(new QuantitySpecialOffer("A99", 3, 1.30m), new QuantitySpecialOffer("B15", 2, 0.45m));
+            var checkout = new Checkout(priceProcessor);
+
+            var items = new Item[] {
+                new Item("B15", 0.30m),
+                new Item("A99", 0.50m),
+                new Item("B15", 0.30m),
+                new Item("C40", 0.60m),
+                new Item("B15", 0.30m),
+                new Item("T27", 0.10m),
+                new Item("B15", 0.30m),
+            };
+
+            foreach (var item in items)
+            {
+                checkout.Scan(item);
+            }
+
+            Assert.That(2.10m, Is.EqualTo(checkout.Total()), "Total price for one item should be 2.10");
+        }
+
     }
 }
