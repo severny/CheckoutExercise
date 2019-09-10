@@ -9,10 +9,16 @@ namespace CheckoutLib
     {
 
         private IList<IItem> _scanedItems = new List<IItem>();
+        private IPriceProcessor<ISpecialOffer> _priceProcessor;
+
+        public Checkout(IPriceProcessor<ISpecialOffer> priceProcessor)
+        {
+            _priceProcessor = priceProcessor;
+        }
 
         public decimal Total()
         {
-            return _scanedItems.Sum(i => i.Price);
+            return _priceProcessor.GetPrice(_scanedItems);
         }
 
         public bool Scan(IItem item)
